@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Lamsat Berkah Bersama | Penyedia Bibit Sawit Unggul</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans untuk kesan lebih techy, modern, dan clean khas startup -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Konfigurasi Warna & Animasi Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        lamsat: {
+                            green: '#2E7D32', // Primary
+                            'green-light': '#4CAF50',
+                            'green-dark': '#1B5E20',
+                            orange: '#F57C00', // Accent
+                            'orange-hover': '#EF6C00',
+                            light: '#F4FBDF', // Super light green/yellowish for fresh background
+                            surface: '#ffffff'
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar kekinian */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2E7D32; }
+
+        /* Utilitas untuk Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modern Placeholder gradient */
+        .modern-placeholder {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .modern-placeholder::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            to { left: 200%; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 overflow-x-hidden">
+
+    <!-- Floating Glassmorphism Navbar -->
+    <div class="fixed top-0 left-0 w-full z-50 p-4 sm:p-6 transition-all duration-300" id="navbar-container">
+        <nav class="max-w-7xl mx-auto bg-white/70 backdrop-blur-xl border border-white/50 shadow-lg shadow-slate-200/50 rounded-full px-6 py-3 transition-all">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <img src="images\logo.jpeg" alt="Lamsat Logo" class="w-12 h-12 rounded-xl object-cover shadow-md group-hover:scale-110 transition-transform">
+                    <div>
+                        <h1 class="font-bold text-xl text-slate-800 leading-none tracking-tight">Lamsat<span class="text-lamsat-green">.</span></h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-1 bg-slate-100/50 rounded-full p-1 border border-slate-200/50">
+                    <a href="#beranda" class="px-5 py-2 rounded-full bg-white text-lamsat-green font-semibold shadow-sm text-sm transition-all">Beranda</a>
+                    <a href="about-us.html" class="px-5 py-2 rounded-full text-slate-600 hover:text-slate-900 font-medium text-sm transition-all hover:bg-white/50">Tentang</a>
+                    <a href="catalog.html" class="px-5 py-2 rounded-full text-slate-600 hover:text-slate-900 font-medium text-sm transition-all hover:bg-white/50">Katalog</a>
+                </div>
+
+                <!-- CTA Button Desktop -->
+                <div class="hidden md:block">
+                    <a href="https://wa.me/6285607663031" target="_blank" class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all duration-200 bg-lamsat-orange rounded-full hover:bg-lamsat-orange-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-600 overflow-hidden">
+                        <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                        <span class="relative flex items-center gap-2">
+                            <i data-lucide="message-circle" class="w-4 h-4 group-hover:animate-bounce"></i>
+                            Hubungi
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full bg-slate-100 text-slate-600">
+                    <i data-lucide="align-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-full left-4 right-4 mt-2 bg-white/90 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl p-4 origin-top transition-all">
+            <div class="flex flex-col space-y-2">
+                <a href="#beranda" class="px-4 py-3 bg-slate-50 text-lamsat-green rounded-2xl font-semibold">Beranda</a>
+                <a href="about-us.html" class="px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-2xl font-medium">Tentang Perusahaan</a>
+                <a href="catalog.html" class="px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-2xl font-medium">Katalog Bibit</a>
+                <a href="https://wa.me/6285607663031" class="px-4 py-3 mt-4 bg-lamsat-orange text-white text-center rounded-2xl font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="phone" class="w-4 h-4"></i> WhatsApp Kami
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section (Modern Asymmetrical) -->
+    <section class="relative pt-40 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-[#FAFCF6]">
+        <!-- Modern Animated Blobs -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-lamsat-light opacity-80 mix-blend-multiply filter blur-3xl animate-blob"></div>
+        <div class="absolute top-40 -left-20 w-72 h-72 rounded-full bg-orange-100 opacity-60 mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Typography Area (Left) -->
+                <div class="lg:col-span-7 reveal">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-6">
+                        <span class="flex h-2.5 w-2.5 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lamsat-orange opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-lamsat-orange"></span>
+                        </span>
+                        <span class="text-xs font-bold tracking-wide text-slate-600 uppercase">Bibit Bersertifikat</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-[4.5rem] font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight">
+                        Wujudkan <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-lamsat-green to-emerald-500">
+                            Kebun Sawit
+                        </span> <br>
+                        Masa Depan.
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl leading-relaxed font-medium">
+                        Bibit unggul berkualitas dari sumber benih terpercaya. Kultur teknis modern untuk hasil panen maksimal.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <a href="#bibit" class="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105 shadow-xl shadow-slate-900/20 flex items-center gap-2">
+                            Lihat Katalog
+                            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#tentang" class="bg-white hover:bg-slate-50 text-slate-800 px-8 py-4 rounded-full font-bold transition-all border border-slate-200 flex items-center gap-2 group">
+                            Pelajari <i data-lucide="play" class="w-4 h-4 text-lamsat-green group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Image & Graphic Area (Right) -->
+                <div class="lg:col-span-5 relative reveal delay-200">
+                    <!-- Main Image Card -->
+                    <img src="images\hero.jpeg" alt="Kebun Sawit Berkualitas PT Lamsat" class="w-full aspect-[4/5] md:aspect-[3/4] rounded-[2.5rem] shadow-2xl border-8 border-white object-cover rotate-2 hover:rotate-0 transition-transform duration-500">
+
+                    <!-- Floating Badge 1 (Modern Social Proof) -->
+                    <div class="absolute -bottom-6 -left-8 md:-left-12 bg-white/90 backdrop-blur-lg p-4 rounded-3xl shadow-xl border border-white animate-float">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-lamsat-orange">
+                                <i data-lucide="leaf" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Varietas</p>
+                                <p class="text-lg font-extrabold text-slate-800">Top Tier</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge 2 -->
+                    <div class="absolute top-10 -right-6 md:-right-10 bg-slate-900 p-4 rounded-3xl shadow-xl border border-slate-700 animate-float" style="animation-delay: 2s;">
+                        <div class="flex items-center gap-3">
+                            <div class="flex -space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-lamsat-green border-2 border-slate-900 flex items-center justify-center text-white text-xs font-bold">PPKS</div>
+                                <div class="w-8 h-8 rounded-full bg-lamsat-orange border-2 border-slate-900 flex items-center justify-center text-white text-xs font-bold">D</div>
+                                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-900 flex items-center justify-center text-white text-xs font-bold">+</div>
+                            </div>
+                            <p class="text-sm font-bold text-white">Lengkap</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo Marquee (Trusted By / Partners Concept) -->
+    <div class="py-10 border-y border-slate-200 bg-white overflow-hidden flex whitespace-nowrap reveal">
+        <div class="animate-[marquee_20s_linear_infinite] flex items-center gap-12 px-6">
+            <span class="text-2xl font-extrabold text-slate-300">PPKS</span>
+            <span class="text-xl font-extrabold text-slate-300">DAMIMAS</span>
+            <span class="text-2xl font-extrabold text-slate-300">TOPAZ</span>
+            <span class="text-xl font-extrabold text-slate-300">DXP SRIWIJAYA</span>
+            <!-- Duplicate for infinite scroll effect -->
+            <span class="text-2xl font-extrabold text-slate-300 ml-12">PPKS</span>
+            <span class="text-xl font-extrabold text-slate-300">DAMIMAS</span>
+            <span class="text-2xl font-extrabold text-slate-300">TOPAZ</span>
+            <span class="text-xl font-extrabold text-slate-300">DXP SRIWIJAYA</span>
+        </div>
+    </div>
+
+    <!-- Bento Grid Features Section -->
+    <section id="tentang" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h2 class="text-lamsat-orange font-bold tracking-widest text-sm uppercase mb-3">Tentang Kami</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">Dedikasi untuk Produktivitas Sawit</h3>
+                <p class="text-slate-600 text-lg">PT Lamsat Berkah Bersama berkomitmen menyuplai bibit terbaik untuk keberlangsungan dan peningkatan tonase sawit nasional.</p>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Large Card -->
+                <div class="md:col-span-2 bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group reveal">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-green-50 rounded-full blur-3xl -mr-20 -mt-20 transition-transform group-hover:scale-150"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between">
+                        <div class="w-14 h-14 bg-lamsat-green text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-green-500/30">
+                            <i data-lucide="shield-check" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-slate-900 mb-3">Sertifikasi & Kualitas</h4>
+                            <p class="text-slate-600 leading-relaxed max-w-md">Kami menolak bibit abal-abal. Semua benih yang kami kembangkan bersumber dari institusi resmi yang diakui pemerintah, menjamin legalitas dan genetik unggul.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Card 1 -->
+                <div class="bg-slate-900 text-white rounded-[2rem] p-8 border border-slate-800 shadow-sm hover:-translate-y-2 transition-all reveal delay-100">
+                    <div class="w-14 h-14 bg-white/10 text-lamsat-orange rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="flask-conical" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Kultur Teknis</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">Perawatan modern dengan SOP ketat. Pemupukan dan penyiraman presisi untuk bibit super.</p>
+                </div>
+
+                <!-- Small Card 2 -->
+                <div class="bg-lamsat-orange text-white rounded-[2rem] p-8 shadow-sm hover:-translate-y-2 transition-all reveal">
+                    <div class="w-14 h-14 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="trending-up" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Tonase Maksimal</h4>
+                    <p class="text-white/80 text-sm leading-relaxed">Investasi cerdas dari awal. Genetik yang baik menghasilkan Tandan Buah Segar (TBS) berlimpah.</p>
+                </div>
+
+                <!-- Medium Card Placeholder -->
+                <div class="md:col-span-2 bg-gradient-to-br from-lamsat-green to-lamsat-green-dark rounded-[2rem] p-8 overflow-hidden relative reveal delay-100 flex items-center">
+                    <div class="relative z-10 w-full flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="text-white">
+                            <h4 class="text-2xl font-bold mb-2">Punya Lahan Tapi Bingung Pilih Bibit?</h4>
+                            <p class="text-green-100">Konsultasikan kebutuhan lahan Anda dengan tim ahli kami.</p>
+                        </div>
+                        <a href="#kontak" class="shrink-0 bg-white text-lamsat-green font-bold px-6 py-3 rounded-full hover:scale-105 transition-transform flex items-center gap-2">
+                            Tanya Sekarang <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Product Catalog -->
+    <section id="bibit" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4 reveal">
+                <div>
+                    <h2 class="text-lamsat-orange font-bold tracking-widest text-sm uppercase mb-3">Katalog Bibit</h2>
+                    <h3 class="text-3xl md:text-5xl font-extrabold text-slate-900">Varian <span class="text-lamsat-green">Unggulan.</span></h3>
+                </div>
+            </div>
+
+            <!-- Horizontal scrollable area on mobile, grid on desktop -->
+            <div class="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 pb-8 snap-x snap-mandatory hide-scroll">
+                
+                <!-- Card 1 -->
+                <div class="min-w-[85vw] md:min-w-0 snap-center group reveal">
+                    <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-300">
+                        <img src="images/image1.jpeg" alt="PPKS Varietas" class="aspect-square rounded-[1.5rem] mb-6 object-cover group-hover:scale-[1.02] transition-transform">
+                        <div class="px-2">
+                            <div class="inline-block px-3 py-1 bg-green-100 text-lamsat-green text-xs font-bold rounded-full mb-3">Populer</div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-2">Varietas PPKS</h4>
+                            <p class="text-slate-500 text-sm mb-4 line-clamp-2">Adaptasi tinggi di berbagai kontur tanah, produksi pelepah optimal.</p>
+                            <a href="#" class="inline-flex items-center gap-2 text-lamsat-orange font-bold text-sm group-hover:gap-3 transition-all">Detail <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="min-w-[85vw] md:min-w-0 snap-center group reveal delay-100">
+                    <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-300">
+                        <img src="images/image2.jpeg" alt="Damimas Varietas" class="aspect-square rounded-[1.5rem] mb-6 object-cover group-hover:scale-[1.02] transition-transform">
+                        <div class="px-2">
+                            <div class="inline-block px-3 py-1 bg-orange-100 text-lamsat-orange text-xs font-bold rounded-full mb-3">High Yield</div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-2">Varietas Damimas</h4>
+                            <p class="text-slate-500 text-sm mb-4 line-clamp-2">Kandungan minyak (OER) sangat tinggi, buah lebat dan berat.</p>
+                            <a href="#" class="inline-flex items-center gap-2 text-lamsat-orange font-bold text-sm group-hover:gap-3 transition-all">Detail <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="min-w-[85vw] md:min-w-0 snap-center group reveal delay-200">
+                    <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-300">
+                        <img src="images/image4.jpeg" alt="Bibit Topaz" class="aspect-square rounded-[1.5rem] mb-6 object-cover group-hover:scale-[1.02] transition-transform">
+                        <div class="px-2">
+                            <div class="inline-block px-3 py-1 bg-blue-100 text-blue-600 text-xs font-bold rounded-full mb-3">Konsisten</div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-2">Varietas Topaz</h4>
+                            <p class="text-slate-500 text-sm mb-4 line-clamp-2">Pertumbuhan meninggi yang lambat, umur panen sangat panjang.</p>
+                            <a href="#" class="inline-flex items-center gap-2 text-lamsat-orange font-bold text-sm group-hover:gap-3 transition-all">Detail <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="min-w-[85vw] md:min-w-0 snap-center group reveal delay-300">
+                    <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-300">
+                        <img src="images/image5.jpeg" alt="Bibit DXP Sriwijaya" class="aspect-square rounded-[1.5rem] mb-6 object-cover group-hover:scale-[1.02] transition-transform">
+                        <div class="px-2">
+                            <div class="inline-block px-3 py-1 bg-purple-100 text-purple-600 text-xs font-bold rounded-full mb-3">Premium</div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-2">DXP Sriwijaya</h4>
+                            <p class="text-slate-500 text-sm mb-4 line-clamp-2">Tahan penyakit, pelepah kokoh, dan potensi tonase di atas rata-rata.</p>
+                            <a href="#" class="inline-flex items-center gap-2 text-lamsat-orange font-bold text-sm group-hover:gap-3 transition-all">Detail <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <style>
+                .hide-scroll::-webkit-scrollbar { display: none; }
+                .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+            </style>
+
+        </div>
+    </section>
+
+    <!-- Modern Dark Footer/Contact -->
+    <footer id="kontak" class="bg-slate-900 text-white pt-20 pb-10 relative overflow-hidden rounded-t-[3rem] mt-10">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-lamsat-green rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Big CTA inside footer -->
+            <div class="bg-gradient-to-r from-lamsat-green-dark to-lamsat-green p-8 md:p-12 rounded-[2.5rem] mb-16 flex flex-col md:flex-row items-center justify-between gap-8 reveal">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Siap Membangun Kebun Impian?</h2>
+                    <p class="text-green-100">Stok bibit terbatas. Hubungi tim kami untuk cek ketersediaan.</p>
+                </div>
+                <a href="https://wa.me/6285607663031" class="shrink-0 bg-white text-slate-900 hover:bg-lamsat-orange hover:text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl flex items-center gap-2">
+                    <i data-lucide="phone-call" class="w-5 h-5"></i> Chat via WhatsApp
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-5 reveal">
+                    <h3 class="font-extrabold text-2xl mb-4 tracking-tight">PT Lamsat Berkah Bersama<span class="text-lamsat-orange">.</span></h3>
+                    <p class="text-slate-400 max-w-sm mb-6 leading-relaxed">
+                        Mitra agrikultur modern penyedia bibit unggul Kelapa Sawit untuk masa depan perkebunan Indonesia yang lebih cerah.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-lamsat-orange hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-lamsat-orange hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="md:col-span-4 reveal delay-100">
+                    <h4 class="font-bold text-lg mb-6">Informasi Kontak</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 mt-0.5 text-lamsat-orange shrink-0"></i>
+                            <span>Dusun Nek Doyan RT 10 RW 09, Desa Laman Satong, Kec. Matan Hilir Utara, Kab. Ketapang</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-lamsat-orange shrink-0"></i>
+                            <div class="flex flex-col">
+                                <a href="tel:+6285607663031" class="hover:text-white transition-colors">+62 856-0766-3031</a>
+                                <a href="tel:+6282187883489" class="hover:text-white transition-colors">+62 821-8788-3489</a>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-lamsat-orange shrink-0"></i>
+                            <a href="mailto:lamsat.bersama@gmail.com" class="hover:text-white transition-colors">lamsat.bersama@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Links -->
+                <div class="md:col-span-3 reveal delay-200">
+                    <h4 class="font-bold text-lg mb-6">Navigasi</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li><a href="index.html" class="hover:text-lamsat-orange transition-colors">Beranda</a></li>
+                        <li><a href="about-us.html" class="hover:text-lamsat-orange transition-colors">Tentang Perusahaan</a></li>
+                        <li><a href="catalog.html" class="hover:text-lamsat-orange transition-colors">Katalog Bibit</a></li>
+                        <li><a href="contact.html" class="hover:text-lamsat-orange transition-colors">Kontak Kami</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 reveal">
+                <p>&copy; <span id="year"></span> PT Lamsat Berkah Bersama. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Designed for Productivity.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modern Floating WA Button -->
+    <a href="https://wa.me/6285607663031" target="_blank" class="fixed bottom-6 right-6 z-50 group flex items-center justify-center w-14 h-14 bg-emerald-500 text-white rounded-full shadow-2xl hover:bg-emerald-600 hover:scale-110 transition-all duration-300">
+        <!-- SVG WA icon -->
+        <svg viewBox="0 0 24 24" class="w-7 h-7 fill-current" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+        </svg>
+        <span class="absolute right-full mr-4 bg-slate-900 text-white text-sm py-1.5 px-3 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Chat Sekarang!</span>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth Scroll & Hide Menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                menu.classList.add('hidden');
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Dynamic Navbar (Shrink/Blur on scroll)
+        window.addEventListener('scroll', () => {
+            const navContainer = document.getElementById('navbar-container');
+            if (window.scrollY > 50) {
+                navContainer.classList.add('py-2');
+                navContainer.classList.remove('p-4', 'sm:p-6');
+            } else {
+                navContainer.classList.remove('py-2');
+                navContainer.classList.add('p-4', 'sm:p-6');
+            }
+        });
+
+        // Scroll Animation (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target); // Hanya animasi 1x
+                }
+            });
+        }, {
+            threshold: 0.1, // Trigger saat 10% elemen terlihat
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
